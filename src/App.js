@@ -5,6 +5,7 @@ import Todos from './components/Todos'
 import Header from './components/Header'
 import AddTodo from './components/AddTodo'
 import About from './pages/About'
+import Axios from 'axios';
 
 let count =5;
 
@@ -14,29 +15,13 @@ class App extends Component {
     super(props)
   
     this.state = {
-       todos: [
-         {
-           id:1,
-           title: 'First Todo',
-           isCompleted: false
-         },
-         {
-          id:2,
-          title: 'Second Todo',
-          isCompleted: false
-        },
-        {
-          id:3,
-          title: 'Third Todo',
-          isCompleted: true
-        },
-        {
-          id:4,
-          title: 'Fourth Todo',
-          isCompleted: false
-        }
-       ]
+       todos: []
     }
+  }
+
+  componentDidMount(){
+    Axios.get('https://jsonplaceholder.typicode.com/todos?_limit=15')
+    .then(res => this.setState({todos:res.data}))
   }
 
 
@@ -44,7 +29,7 @@ class App extends Component {
   markComplete = (id) => {
     this.setState({ todos: this.state.todos.map(todo => {
       if(todo.id === id){
-        todo.isCompleted = !todo.isCompleted
+        todo.completed = !todo.completed
       }
       return todo
     })})
@@ -60,10 +45,10 @@ class App extends Component {
     const newTodo = {
       id: count,
       title: title,
-      isCompleted: false
+      completed: false
     }
     this.setState({
-      todos : [...this.state.todos,newTodo]
+      todos : [newTodo,...this.state.todos]
     });
     count++;
   }

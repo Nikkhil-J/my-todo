@@ -6,7 +6,7 @@ export class TodoItem extends Component {
             background : '#f4f4f4',
             padding: '10px',
             borderBottom: '1px #ccc solid ',
-            textDecoration: this.props.todo.isCompleted ? 'line-through': 'none'
+            textDecoration: this.props.todo.completed ? 'line-through': 'none'
         }
     }
     render() {
